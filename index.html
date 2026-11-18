@@ -1,326 +1,78 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CyberGuard AI</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-</head>
-<body>
-
-<!-- ==================== WELCOME SCREEN ==================== -->
+<!-- ==================== TRANG INTRO NGHỆ THUẬT & PHÒNG THỦ CHIẾN THUẬT ==================== -->
 <section id="welcomeScreen">
-    <div class="logo-stage">
-        <div class="sun-orb"></div>
-        <div class="sun-beams"></div>
-        <div class="night-defense-ring"></div>
-        <div class="shield-emblem">
-            <svg width="98" height="110" viewBox="0 0 100 112" fill="none">
+    <!-- Bầu trời chuyển phổ Nóng -> Lạnh & Thiên thể ở phía xa -->
+    <div class="sky-horizon-backdrop"></div>
+    <div class="distant-celestial" id="distantCelestial"></div>
+
+    <!-- Không gian trình diễn Logo & Lực lượng tuần tra -->
+    <div class="tactical-stage">
+        <!-- Luồng sáng nhiệt giảm dần: Trắng -> Vàng nhạt -> Vàng đậm -->
+        <div class="thermal-light-cone" id="thermalLightCone"></div>
+
+        <!-- Đội bay UAV tuần tra xung quanh trên không -->
+        <div class="uav-orbit uav-1" title="UAV Trinh sát 01">
+            <svg width="26" height="14" viewBox="0 0 26 14" fill="none">
+                <path d="M13 2L25 8L13 11L1 8L13 2Z" fill="#94a3b8" stroke="#38bdf8" stroke-width="1"/>
+                <circle cx="13" cy="7" r="1.5" fill="#f43f5e"/>
+            </svg>
+        </div>
+        <div class="uav-orbit uav-2" title="UAV Trinh sát 02">
+            <svg width="22" height="12" viewBox="0 0 26 14" fill="none">
+                <path d="M13 2L25 8L13 11L1 8L13 2Z" fill="#cbd5e1" stroke="#fbbf24" stroke-width="1"/>
+                <circle cx="13" cy="7" r="1.5" fill="#10b981"/>
+            </svg>
+        </div>
+
+        <!-- Logo Khiên bay vào & Hóa cứng ánh kim -->
+        <div class="shield-emblem kinetic-entry" id="heroShield">
+            <svg width="112" height="124" viewBox="0 0 100 112" fill="none">
                 <defs>
                     <linearGradient id="shieldGrad" x1="10" y1="5" x2="90" y2="105" gradientUnits="userSpaceOnUse">
-                        <stop offset="0%" stop-color="#38bdf8"/><stop offset="50%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#0f172a"/>
+                        <stop offset="0%" stop-color="#38bdf8"/>
+                        <stop offset="50%" stop-color="#1e293b"/>
+                        <stop offset="100%" stop-color="#090d16"/>
                     </linearGradient>
                     <linearGradient id="shieldBorder" x1="0" y1="0" x2="100" y2="112" gradientUnits="userSpaceOnUse">
-                        <stop offset="0%" stop-color="#fde047"/><stop offset="50%" stop-color="#a855f7"/><stop offset="100%" stop-color="#f43f5e"/>
+                        <stop offset="0%" stop-color="#ffffff"/>
+                        <stop offset="45%" stop-color="#fde047"/>
+                        <stop offset="100%" stop-color="#d97706"/>
                     </linearGradient>
                 </defs>
-                <path d="M50 4L10 20V52C10 79.5 27.1 103.8 50 109C72.9 103.8 90 79.5 90 52V20L50 4Z" fill="url(#shieldGrad)" stroke="url(#shieldBorder)" stroke-width="4"/>
+                <path d="M50 4L10 20V52C10 79.5 27.1 103.8 50 109C72.9 103.8 90 79.5 90 52V20L50 4Z" fill="url(#shieldGrad)" stroke="url(#shieldBorder)" stroke-width="4.5"/>
                 <path d="M50 26C42.8 26 37 31.8 37 39V45H63V39C63 31.8 57.2 26 50 26Z" stroke="#f8fafc" stroke-width="4" stroke-linecap="round"/>
-                <rect x="31" y="45" width="38" height="30" rx="6" fill="#0f172a" stroke="#38bdf8" stroke-width="3"/>
-                <circle cx="50" cy="58" r="4" fill="#38bdf8"/>
-                <path d="M50 62V68" stroke="#38bdf8" stroke-width="3" stroke-linecap="round"/>
+                <rect x="31" y="45" width="38" height="30" rx="6" fill="#0f172a" stroke="#fde047" stroke-width="3"/>
+                <circle cx="50" cy="58" r="4" fill="#fde047"/>
+                <path d="M50 62V68" stroke="#fde047" stroke-width="3" stroke-linecap="round"/>
             </svg>
+            <div class="metallic-sheen"></div>
+        </div>
+
+        <!-- Bóng đổ phối cảnh theo luật gần xa của mỹ thuật -->
+        <div class="perspective-ground-shadow" id="perspectiveShadow"></div>
+
+        <!-- Tuyến phòng thủ mặt đất với các xe tăng tí hon di chuyển -->
+        <div class="ground-patrol-line">
+            <div class="mini-tank tank-left">
+                <svg width="34" height="16" viewBox="0 0 34 16" fill="none">
+                    <rect x="12" y="3" width="11" height="5" rx="1.5" fill="#475569"/>
+                    <line x1="23" y1="5.5" x2="32" y2="4.5" stroke="#94a3b8" stroke-width="2"/>
+                    <path d="M4 8H28L31 12H2L4 8Z" fill="#334155" stroke="#fbbf24" stroke-width="0.8"/>
+                    <rect x="3" y="12" width="27" height="3.5" rx="1.7" fill="#0f172a" stroke="#64748b" stroke-width="0.8"/>
+                </svg>
+            </div>
+            <div class="mini-tank tank-right">
+                <svg width="30" height="14" viewBox="0 0 34 16" fill="none">
+                    <rect x="11" y="3" width="11" height="5" rx="1.5" fill="#475569"/>
+                    <line x1="2" y1="4.5" x2="11" y2="5.5" stroke="#94a3b8" stroke-width="2"/>
+                    <path d="M6 8H30L32 12H3L6 8Z" fill="#334155" stroke="#38bdf8" stroke-width="0.8"/>
+                    <rect x="4" y="12" width="27" height="3.5" rx="1.7" fill="#0f172a" stroke="#64748b" stroke-width="0.8"/>
+                </svg>
+            </div>
         </div>
     </div>
 
-    <div class="live-badge" id="welcomeStatusPill">⏱️ Đang đồng bộ...</div>
+    <div class="live-badge" id="welcomeStatusPill">⏱️ Đang đồng bộ bầu trời...</div>
     <h1>CyberGuard AI</h1>
     <p>Hệ thống Phòng vệ An toàn Thông tin & Trợ lý AI Đa hình thái.</p>
     <button class="btn-primary" onclick="startSystem()">🚀 Bắt đầu</button>
 </section>
-
-<!-- ==================== MAIN APP ==================== -->
-<div id="mainApp">
-    <nav class="top-navbar">
-        <div class="nav-left">
-            <button class="hamburger-btn" onclick="toggleSidebar()">☰</button>
-            <div class="brand" onclick="goWelcome()">
-                <div class="mini-logo-icon" id="headerMiniIcon">🛡️</div>
-                <span>CyberGuard AI</span>
-            </div>
-        </div>
-        <div style="display: flex; align-items: center; gap: 10px;">
-            <span id="topModeTag" class="badge b-safe">Đang đồng bộ...</span>
-            <span style="font-weight: 800; color: var(--accent); font-size: 0.95rem;" id="headerLiveClock">00:00:00</span>
-        </div>
-    </nav>
-
-    <!-- Left Sidebar -->
-    <aside class="left-sidebar">
-        <div>
-            <button class="sidebar-item active" data-theme="amber" onclick="switchTab('gameTab', this)">
-                <span class="module-logo" style="background: rgba(245, 158, 11, 0.16);">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 4H18V10C18 13.3137 15.3137 16 12 16C8.68629 16 6 13.3137 6 10V4Z" fill="#f59e0b" stroke="#fbbf24" stroke-width="2"/><path d="M9 20H15M12 16V20" stroke="#fbbf24" stroke-width="2" stroke-linecap="round"/></svg>
-                </span>
-                <span class="nav-label">Vượt Ải 3 Tầng</span>
-            </button>
-
-            <button class="sidebar-item" data-theme="purple" onclick="switchTab('sosAiTab', this)">
-                <span class="module-logo" style="background: rgba(168, 85, 247, 0.18);">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="5" y="7" width="14" height="12" rx="3" fill="#9333ea" stroke="#c084fc" stroke-width="2"/><circle cx="9.5" cy="12.5" r="1.5" fill="#fde047"/><circle cx="14.5" cy="12.5" r="1.5" fill="#fde047"/><path d="M12 3V7" stroke="#f43f5e" stroke-width="2.2" stroke-linecap="round"/></svg>
-                </span>
-                <span class="nav-label">Trợ Lý AI & SOS 60s</span>
-            </button>
-
-            <button class="sidebar-item" data-theme="emerald" onclick="switchTab('wifiPhishTab', this)">
-                <span class="module-logo" style="background: rgba(16, 185, 129, 0.16);">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M3 9C8.2 4.5 15.8 4.5 21 9" stroke="#10b981" stroke-width="2.3" stroke-linecap="round"/><path d="M6.5 13C9.8 10.2 14.2 10.2 17.5 13" stroke="#34d399" stroke-width="2.3" stroke-linecap="round"/><circle cx="12" cy="17.5" r="2.5" fill="#fbbf24"/></svg>
-                </span>
-                <span class="nav-label">Quét Wi-Fi & Link</span>
-            </button>
-
-            <button class="sidebar-item" data-theme="cyan" onclick="switchTab('pwdClockTab', this)">
-                <span class="module-logo" style="background: rgba(56, 189, 248, 0.16);">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="13" r="8" fill="#0284c7" stroke="#38bdf8" stroke-width="2"/><path d="M12 9V13L15 15" stroke="#fde047" stroke-width="2.2" stroke-linecap="round"/><path d="M9 3H15" stroke="#38bdf8" stroke-width="2.2" stroke-linecap="round"/></svg>
-                </span>
-                <span class="nav-label">Mật Khẩu & Giờ Độc</span>
-            </button>
-        </div>
-
-        <button class="sidebar-sos-btn" onclick="jumpToSos()">
-            <span>🚨</span>
-            <span class="sos-text">SOS Khẩn Cấp</span>
-        </button>
-    </aside>
-
-    <!-- Main Workspace -->
-    <main class="main-workspace">
-        <!-- TAB 1: VƯỢT ẢI 3 TẦNG -->
-        <div id="gameTab" class="tab-content active">
-            <div class="card" style="border-top: 3px solid #f59e0b;">
-                <div class="section-header-box">
-                    <div class="section-big-logo" style="background: rgba(245, 158, 11, 0.16);"><span style="font-size: 1.4rem;">🏆</span></div>
-                    <div><h2>Đấu Trường Vượt Ải (3 Tầng • Đạt ≥ 7/10 để mở khóa)</h2></div>
-                </div>
-
-                <div class="tier-selector" id="tierSelector">
-                    <div class="tier-card" id="cardTier1" onclick="tryStartTier(1)">
-                        <span class="badge b-safe">TẦNG 1 • DỄ</span>
-                        <h3>🟢 Phản Xạ Đời Thường</h3>
-                        <p>SMS, cuộc gọi shipper, CCCD & Wi-Fi công cộng.</p>
-                        <div class="unlock-banner" id="statusTier1">🔓 Sẵn sàng</div>
-                    </div>
-
-                    <div class="tier-card locked" id="cardTier2" onclick="tryStartTier(2)">
-                        <span class="badge b-warn">TẦNG 2 • KHÁ</span>
-                        <h3>🟡 Giả Mạo & Đường Dẫn</h3>
-                        <p>Tên miền <code>.xyz</code>, tệp <code>.apk</code> & bẫy Wi-Fi.</p>
-                        <div class="lock-banner" id="statusTier2">🔒 Đã khóa • Cần ≥ 7/10 Tầng 1</div>
-                    </div>
-
-                    <div class="tier-card locked" id="cardTier3" onclick="tryStartTier(3)">
-                        <span class="badge b-danger">TẦNG 3 • KHÓ</span>
-                        <h3>🔴 Chuyên Sâu An Ninh Mạng</h3>
-                        <p>Session Cookie, Infostealer, Evil Twin & Entropy.</p>
-                        <div class="lock-banner" id="statusTier3">🔒 Đã khóa • Cần ≥ 7/10 Tầng 2</div>
-                    </div>
-                </div>
-
-                <div id="quizPlayArea" class="quiz-arena" style="display: none; margin-top: 14px;">
-                    <div class="quiz-top-bar">
-                        <span id="quizTierTitle" style="color: #fbbf24;">Tầng 1</span>
-                        <span id="quizProgress">Câu 1 / 10 | Điểm: 0</span>
-                    </div>
-
-                    <div class="quiz-split-layout">
-                        <div class="visual-mockup-frame">
-                            <div class="mockup-status-bar">
-                                <span id="mockupDeviceLabel">📱 Thiết bị</span>
-                                <span id="mockupSignalLabel">📶 5G</span>
-                            </div>
-                            <div class="mockup-screen-body">
-                                <div class="mockup-svg-art" id="mockupSvgArt"></div>
-                                <div class="mockup-caption-box" id="mockupCaptionText"></div>
-                                <div id="mockupTagContainer"></div>
-                            </div>
-                        </div>
-
-                        <div>
-                            <h3 id="questionText" style="font-size: 1.04rem; margin-bottom: 14px;"></h3>
-                            <div id="optionsContainer"></div>
-                            <div style="display: flex; justify-content: space-between; margin-top: 12px;">
-                                <button class="sample-btn" onclick="resetToTiers()">⬅️ Bản đồ</button>
-                                <button class="action-btn" id="nextQuestionBtn" style="display: none;" onclick="nextQuestion()">Tiếp theo ➡️</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="quizSummaryArea" style="display: none; margin-top: 16px; background: var(--bg-sub); padding: 20px; border-radius: 14px; border: 1px solid #f59e0b; text-align: center;">
-                    <div id="finalCertBadge" style="margin-bottom: 8px;"></div>
-                    <h3 id="finalScoreText" style="margin-bottom: 6px;"></h3>
-                    <p id="unlockNoticeText" style="font-size: 0.92rem; margin-bottom: 12px; font-weight: 600;"></p>
-                    <div style="max-width: 320px; margin: 0 auto 14px;"><canvas id="gameRadarChart"></canvas></div>
-                    <button class="sample-btn" onclick="resetToTiers()">🗺️ Bản đồ 3 Tầng</button>
-                    <button class="action-btn" id="nextTierJumpBtn" style="display: none;" onclick="jumpNextUnlockedTier()">🚀 Tầng tiếp theo</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- TAB 2: TRỢ LÝ AI STREAMING & SOS 60S -->
-        <div id="sosAiTab" class="tab-content">
-            <div class="grid-2">
-                <div class="card" style="border-top: 3px solid #a855f7;">
-                    <div class="section-header-box">
-                        <div class="section-big-logo" style="background: rgba(168, 85, 247, 0.18);"><span style="font-size: 1.4rem;">🤖</span></div>
-                        <div><h2>Trợ Lý AI An Ninh Mạng</h2></div>
-                    </div>
-
-                    <div class="ai-engine-bar">
-                        <span id="aiEngineStatus">⚡ <strong>Streaming AI (Python / Offline NLP)</strong></span>
-                        <button class="sample-btn" style="margin: 0; border-color: #a855f7; color: #c084fc;" onclick="toggleApiKeyPanel()">🔑 API Key</button>
-                    </div>
-
-                    <div id="apiKeyPanel" style="display: none; background: var(--bg-sub); padding: 10px; border-radius: 10px; border: 1px dashed #a855f7; margin-bottom: 10px;">
-                        <div style="display: flex; gap: 8px;">
-                            <input type="password" id="geminiKeyInput" style="margin-bottom: 0;" placeholder="Dán Gemini API Key (AIzaSy...)">
-                            <button class="action-btn" onclick="saveGeminiKey()">Lưu</button>
-                        </div>
-                    </div>
-
-                    <div style="margin-bottom: 8px;">
-                        <button class="sample-btn" onclick="askQuick('Vừa lỡ bấm link lạ qua SMS thì làm sao?')">Bấm nhầm link</button>
-                        <button class="sample-btn" onclick="askQuick('Cơ chế đánh cắp Cookie vượt 2FA')">Cookie vượt 2FA</button>
-                        <button class="sample-btn" onclick="askQuick('Nhận diện cuộc gọi Deepfake')">Deepfake</button>
-                    </div>
-
-                    <div class="chat-box" id="aiChatBox">
-                        <div class="msg msg-ai">Chào bạn! Hỏi mình bất kỳ tình huống bảo mật nào hoặc dán tin nhắn đáng ngờ vào đây để kiểm tra nhé.</div>
-                    </div>
-
-                    <div style="display: flex; gap: 8px;">
-                        <input type="text" id="chatInput" style="margin-bottom: 0;" placeholder="Nhập câu hỏi..." onkeypress="if(event.key==='Enter') sendChat()">
-                        <button class="action-btn" onclick="sendChat()">Gửi</button>
-                    </div>
-                </div>
-
-                <div class="card" style="border-top: 3px solid #f43f5e;">
-                    <div class="section-header-box">
-                        <div class="section-big-logo" style="background: rgba(244, 63, 94, 0.16);"><span style="font-size: 1.4rem;">🚨</span></div>
-                        <div><h2 style="color: var(--danger);">Ứng Cứu Khẩn Cấp 60s</h2></div>
-                    </div>
-                    <select id="sosScenario">
-                        <option value="apk">1. Vừa cài tệp .apk lạ trên Android</option>
-                        <option value="phish_pass">2. Vừa nhập mật khẩu / OTP vào web giả</option>
-                        <option value="deepfake_money">3. Vừa chuyển tiền cho kẻ lừa đảo</option>
-                        <option value="wifi_hack">4. Nghi lộ tài khoản qua Wi-Fi công cộng</option>
-                    </select>
-                    <button class="danger-btn" onclick="runEmergencyWizard()">⚡ Kích hoạt Quy trình</button>
-                    <div class="result-box" id="sosStepsBox" style="border-left-color: var(--danger);">Chọn tình huống phía trên để xem hướng dẫn xử lý từng giây.</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- TAB 3: WI-FI & LINK -->
-        <div id="wifiPhishTab" class="tab-content">
-            <div class="grid-2">
-                <div class="card" style="border-top: 3px solid #10b981;">
-                    <div class="section-header-box">
-                        <div class="section-big-logo" style="background: rgba(16, 185, 129, 0.16);"><span style="font-size: 1.4rem;">📡</span></div>
-                        <div><h2>Kiểm Tra Wi-Fi</h2></div>
-                    </div>
-                    <select id="wifiLocation">
-                        <option value="home">Mạng gia đình / 4G-5G cá nhân</option>
-                        <option value="cafe_pass">Wi-Fi quán cà phê / trường học</option>
-                        <option value="public_open">Wi-Fi miễn phí không mật khẩu</option>
-                        <option value="captive">Wi-Fi bắt đăng nhập Facebook/Google</option>
-                    </select>
-                    <select id="vpnStatus">
-                        <option value="no">Chưa bật VPN</option>
-                        <option value="yes">Đang bật VPN</option>
-                    </select>
-                    <button class="emerald-btn" onclick="analyzeWifi()">🔍 Đánh giá</button>
-                    <div class="result-box" id="wifiResult" style="border-left-color: #10b981;">Giao thức hiện tại: <strong id="protocolStatus">...</strong></div>
-                </div>
-
-                <div class="card" style="border-top: 3px solid #10b981;">
-                    <div class="section-header-box">
-                        <div class="section-big-logo" style="background: rgba(16, 185, 129, 0.16);"><span style="font-size: 1.4rem;">🔗</span></div>
-                        <div><h2>Quét Link & Tin Nhắn</h2></div>
-                    </div>
-                    <div style="margin-bottom: 6px;">
-                        <button class="sample-btn" onclick="loadSample(1)">Mẫu Ngân hàng</button>
-                        <button class="sample-btn" onclick="loadSample(2)">Mẫu .apk</button>
-                        <button class="sample-btn" onclick="loadSample(3)">Link sạch</button>
-                    </div>
-                    <textarea id="phishingInput" rows="3" placeholder="Dán link hoặc tin nhắn vào đây..."></textarea>
-                    <button class="emerald-btn" onclick="scanPhishing()">🛡️ Quét ngay</button>
-                    <div class="result-box" id="phishingResult" style="border-left-color: #10b981;">Sẵn sàng kiểm tra.</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- TAB 4: MẬT KHẨU & GIỜ ĐỘC -->
-        <div id="pwdClockTab" class="tab-content">
-            <div class="grid-2">
-                <div class="card" style="border-top: 3px solid #38bdf8;">
-                    <div class="section-header-box">
-                        <div class="section-big-logo" style="background: rgba(56, 189, 248, 0.16);"><span style="font-size: 1.4rem;">🔐</span></div>
-                        <div><h2>Đo Độ Mạnh Mật Khẩu</h2></div>
-                    </div>
-                    <input type="text" id="pwdInput" placeholder="Nhập thử mật khẩu..." oninput="checkPassword()">
-                    <div class="result-box" id="pwdResult">Nhập mật khẩu để tính chỉ số Entropy.</div>
-                </div>
-
-                <div class="card" style="border-top: 3px solid #38bdf8;">
-                    <div class="section-header-box">
-                        <div class="section-big-logo" style="background: rgba(56, 189, 248, 0.16);"><span style="font-size: 1.4rem;">⏱️</span></div>
-                        <div><h2>Cảnh Báo Theo Khung Giờ</h2></div>
-                    </div>
-                    <div style="background: var(--bg-sub); padding: 14px; border-radius: 12px; text-align: center; margin-bottom: 10px; border: 1px solid var(--border);">
-                        <div id="cyberClock" style="font-size: 2.3rem; font-weight: 800; color: var(--accent);">00:00:00</div>
-                        <div id="threatWindowBadge" class="badge b-warn" style="margin-top: 4px;">...</div>
-                    </div>
-                    <p id="threatWindowDesc" style="font-size: 0.88rem; color: var(--text-muted);"></p>
-                </div>
-            </div>
-        </div>
-
-        <footer>
-            CyberGuard AI • Khoa Kỹ thuật Máy tính & Điện tử (VKU) • GVHD: TS. Hoàng Hữu Đức
-        </footer>
-    </main>
-
-    <!-- AI Narrator Popup -->
-    <div id="aiNarratorBox" class="ai-narrator-overlay">
-        <div class="ai-avatar-bot">🤖</div>
-        <div style="flex: 1;">
-            <strong id="aiNarratorTitle" style="color: #c084fc; font-size: 0.92rem; display: block; margin-bottom: 3px;">CyberGuard AI</strong>
-            <p id="aiNarratorText" style="font-size: 0.86rem; line-height: 1.4;"></p>
-        </div>
-    </div>
-
-    <!-- HỘP XÁC THỰC QUẢN TRỊ VIÊN ẨN (CTRL + SHIFT + L) -->
-    <div id="adminAuthModal" class="admin-modal-backdrop">
-        <div class="admin-modal-box">
-            <h3 style="margin-bottom: 8px; color: #c084fc;">🔐 Xác thực Quyền Quản Trị</h3>
-            <p style="font-size: 0.83rem; color: var(--text-muted); margin-bottom: 12px;">Nhập Mã PIN Admin để điều khiển trạng thái khóa tầng hoặc chế độ trình chiếu.</p>
-            <input type="password" id="adminPinInput" placeholder="Nhập mã PIN..." onkeypress="if(event.key==='Enter') verifyAdminPin()">
-            <div id="adminActionsArea" style="display: none; margin-bottom: 12px;">
-                <button class="emerald-btn" style="width: 100%; margin-bottom: 8px;" onclick="adminUnlockAll()">🔓 Mở khóa cả 3 Tầng (Demo)</button>
-                <button class="danger-btn" style="width: 100%; margin-bottom: 8px;" onclick="adminRelockAll()">🔒 Khóa lại về Tầng 1</button>
-                <button class="action-btn" style="width: 100%;" onclick="toggleDemoSim()">☀️/🛡️ Đổi chế độ Ngày/Đêm</button>
-            </div>
-            <div style="display: flex; gap: 8px; justify-content: flex-end;">
-                <button class="sample-btn" style="margin: 0;" onclick="closeAdminModal()">Đóng</button>
-                <button class="action-btn" id="adminVerifyBtn" onclick="verifyAdminPin()">Xác nhận</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script src="app.js"></script>
-</body>
-</html>
